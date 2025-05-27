@@ -22,7 +22,9 @@ w = config.world_model_lr
 c = config.critic_lr
 
 config = (
-    config.resources(
+    DreamerV3Config()
+    .framework("torch")  # ✅ THIS FIXES THE ERROR
+    .resources(
         num_cpus_for_main_process=8 * (num_gpus or 1),
     )
     .learners(
@@ -37,7 +39,7 @@ config = (
         report_individual_batch_item_stats=False,
     )
     .training(
-        model_size="L",  # Change to "XL" for large models
+        model_size="L",
         training_ratio=64,
         batch_size_B=16 * (num_gpus or 1),
         world_model_lr=[[0, 0.4 * w], [50000, 0.4 * w], [100000, 3 * w]],
