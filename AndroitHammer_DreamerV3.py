@@ -18,6 +18,9 @@ import numpy as np
 from ray.rllib.algorithms.dreamerv3.dreamerv3 import DreamerV3Config
 from ray import tune
 
+# ----------------------------------------
+# ✅ Wrapper for Box-based obs to float32
+# ----------------------------------------
 class BoxObsFloat32Wrapper(gym.ObservationWrapper):
     def __init__(self, env):
         super().__init__(env)
@@ -30,31 +33,28 @@ class BoxObsFloat32Wrapper(gym.ObservationWrapper):
 
     def observation(self, obs):
         return np.array(obs, dtype=np.float32)
-# ------------------------------------------------
-# ✅ Register the wrapped environment for RLlib
-# ------------------------------------------------
-tune.register_env("flappy-bird", lambda ctx: BoxObsFloat32Wrapper(gym.make("AdroitHandHammer-v1")))
 
-# ------------------------------------------------
-# ⚙️ DreamerV3 configuration
-# ------------------------------------------------
+# ----------------------------------------
+# ✅ Register the wrapped environment
+# ----------------------------------------
+ENV_NAME = "flappy-bird"
+REAL_ENV_ID = "AdroitHandHammer-v1"
+
+tune.register_env(ENV_NAME, lambda ctx: BoxObsFloat32Wrapper(gym.make(REAL_ENV_ID)))
+
+# ----------------------------------------
+# ✅ DreamerV3 Configuration
+# ----------------------------------------
 num_gpus = 4
 config = DreamerV3Config()
 w = config.world_model_lr
 c = config.critic_lr
 
 (
-    config.resources(
-        num_cpus_for_main_process=8 * num_gpus,
-    )
-    .learners(
-        num_learners=num_gpus,
-        num_gpus_per_learner=1,
-    )
-    .env_runners(
-        num_envs_per_env_runner=8 * num_gpus,
-        remote_worker_envs=True
-    )
+    config.environment(env=ENV_NAME)
+    .resources(num_cpus_for_main_process=8 * num_gpus)
+    .learners(num_learners=num_gpus, num_gpus_per_learner=1)
+    .env_runners(num_envs_per_env_runner=8 * num_gpus, remote_worker_envs=True)
     .reporting(
         metrics_num_episodes_for_smoothing=num_gpus,
         report_images_and_videos=False,
@@ -71,14 +71,9 @@ c = config.critic_lr
     )
 )
 
-# ------------------------------------------------
-# ✅ Optional Sanity Check for Observation Wrapper
-# ------------------------------------------------
-if __name__ == "__main__":
-    print("🔍 Running sanity check for BoxObsFloat32Wrapper...")
-    test_env = BoxObsFloat32Wrapper(gym.make("AdroitHandHammer-v1"))
-    test_obs, _ = test_env.reset()
-    print(f"Obs: dtype={test_obs.dtype}, shape={test_obs.shape}")
-    is_valid = test_env.observation_space.contains(test_obs)
-    print(f"Valid in obs space: {is_valid}")
-    print("✅ Sanity check complete.")
+# ----------------------------------------
+# ✅ Optional: Stopping criteria for testing
+# ----------------------------------------
+stop = {
+    "training_iteration": 1
+}
