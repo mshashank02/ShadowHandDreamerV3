@@ -3,10 +3,7 @@ import gymnasium_robotics
 
 gym.register_envs(gymnasium_robotics)
 
-env = gym.make('FrankaKitchen-v1', tasks_to_complete=['microwave', 'kettle'])
+env = gym.make("AdroitHandHammer-v1")
+obs, _ = env.reset()
 
-obs, info = env.reset()
-print("Observation shape:", obs.shape)
-print("Dtype:", obs.dtype)
-env.close()
-
+print("Observation type:", type(obs))  # <class 'dict'>
