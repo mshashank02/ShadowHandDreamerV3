@@ -20,7 +20,7 @@ except ImportError:
 
 gym.register_envs(gymnasium_robotics)
 # Set environment ID
-ENV_ID = "FetchReach-v3"
+ENV_ID = "FetchReach-v1"
 
 # Register the environment
 tune.register_env(ENV_ID, lambda ctx: gym.make(ENV_ID))
