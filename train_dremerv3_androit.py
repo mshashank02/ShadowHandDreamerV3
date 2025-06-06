@@ -19,7 +19,7 @@ except ImportError:
     raise ImportError("Install with: `pip install gymnasium_robotics`")
 
 # Set environment ID
-ENV_ID = "AdroitHandHammer-v1"
+ENV_ID = "FetchReach-v3"
 
 # Register the environment
 tune.register_env(ENV_ID, lambda ctx: gym.make(ENV_ID))
