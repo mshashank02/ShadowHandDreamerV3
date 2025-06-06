@@ -224,7 +224,7 @@ if __name__ == "__main__":
         if args.env is not None:
             exp["config"]["env"] = args.env
         else:
-            exp["config"]["env"] = exp["env"]
+            exp["config"]["env"] = "AdroitHandHammer-v1"
 
         # Override the mean reward if specified. This is used by the ray ci
         # for overriding the episode reward mean for tf2 tests for off policy
