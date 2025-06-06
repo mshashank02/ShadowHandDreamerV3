@@ -18,6 +18,7 @@ try:
 except ImportError:
     raise ImportError("Install with: `pip install gymnasium_robotics`")
 
+gym.register_envs(gymnasium_robotics)
 # Set environment ID
 ENV_ID = "FetchReach-v3"
 
