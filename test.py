@@ -15,8 +15,8 @@ register_env(ENV_ID, lambda config: gym.make(ENV_ID))
 config = (
     PPOConfig()
     .environment(env=ENV_ID)
-    .framework("torch")  # ✅ Use PyTorch
-    .rollouts(num_rollout_workers=2)
+    .framework("torch")  # ✅ PyTorch backend
+    .env_runners(num_envs_per_env_runner=1, num_env_runners=2)  # ✅ Updated API
     .training(train_batch_size=4000, model={"fcnet_hiddens": [256, 256]})
 )
 
