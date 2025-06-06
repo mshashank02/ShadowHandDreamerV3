@@ -45,7 +45,7 @@ tune.register_env(ENV_NAME, lambda ctx: BoxObsFloat32Wrapper(gym.make(REAL_ENV_I
 # ----------------------------------------
 # ✅ DreamerV3 Configuration
 # ----------------------------------------
-num_gpus = 4
+num_gpus = 2
 config = DreamerV3Config()
 w = config.world_model_lr
 c = config.critic_lr

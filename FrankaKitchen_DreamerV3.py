@@ -8,7 +8,7 @@ from ray.rllib.algorithms.dreamerv3.dreamerv3 import DreamerV3Config
 from ray import tune
 
 # Set number of GPUs to use
-num_gpus = 1
+num_gpus = 2
 
 # Register the kitchen environment with the specific microwave task
 def kitchen_microwave_env_creator(ctx):
