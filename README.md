@@ -16,7 +16,7 @@ Make sure you're connected to the **CoE VPN** before proceeding.
 Open your terminal and run:
 
 ```bash
-ssh shashank@169.237.227.156
+ssh shashank@169.237.117.156
 
 When prompted, enter the password:
 #lara2024
