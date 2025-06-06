@@ -30,7 +30,7 @@ num_gpus = 4
 # Create the specific gymnasium robotics env.
 # e.g. AdroitHandHammerSparse-v1 or FrankaKitchen-v1.
 # return gym.make("FrankaKitchen-v1", tasks_to_complete=["microwave", "kettle"])
-tune.register_env("flappy-bird", lambda ctx: gym.make("AdroitHandHammer-v1"))
+tune.register_env("AdroitHandHammer-v1", lambda ctx: gym.make("AdroitHandHammer-v1"))
 
 # Define the DreamerV3 config object to use.
 config = DreamerV3Config()
